@@ -9,6 +9,9 @@ const useCarousel = (slideCount, onSlideClick, initialIndex = 0, onIndexChange) 
   const isSwiping = useRef(false);
   const pressTimer = useRef(null);
   const visibilityTimer = useRef(null);
+  const mouseDownTimer = useRef(null);
+  const wheelTimeout = useRef(null);
+  const isWheeling = useRef(false);
 
   // Update currentIndex when initialIndex changes (e.g., when navigating from quiz)
   useEffect(() => {
@@ -105,10 +108,79 @@ const useCarousel = (slideCount, onSlideClick, initialIndex = 0, onIndexChange) 
     isSwiping.current = false;
   };
 
+  // PC Support: Mouse wheel / trackpad swipe
+  const handleWheel = (e) => {
+    // Sadece yatay kaydırmayı dinle (trackpad two-finger swipe)
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      e.preventDefault();
+      
+      // Debounce: Çok hızlı kaydırmayı önle
+      if (isWheeling.current) return;
+      
+      isWheeling.current = true;
+      
+      if (e.deltaX > 30) {
+        nextSlide(true);
+      } else if (e.deltaX < -30) {
+        prevSlide(true);
+      }
+      
+      clearTimeout(wheelTimeout.current);
+      wheelTimeout.current = setTimeout(() => {
+        isWheeling.current = false;
+      }, 300);
+    }
+  };
+
+  // PC Support: Mouse hold to show controls
+  const handleMouseDown = (e) => {
+    // Quiz modal veya carousel control'a tıklanmışsa ignore et
+    if (e.target.closest('.carousel-control') || 
+        e.target.closest('.exit-button') ||
+        e.target.closest('.quiz-modal-overlay')) {
+      return;
+    }
+    
+    clearTimeout(mouseDownTimer.current);
+    mouseDownTimer.current = setTimeout(() => {
+      showControls();
+    }, 1000); // 1 saniye basılı tutunca kontrolleri göster
+  };
+
+  const handleMouseUp = () => {
+    clearTimeout(mouseDownTimer.current);
+  };
+
+  const handleMouseLeave = () => {
+    clearTimeout(mouseDownTimer.current);
+  };
+
+  // Keyboard event listener
+  useEffect(() => {
+    const keyHandler = (e) => {
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        setCurrentIndex((prev) => (prev + 1) % slideCount);
+        showControls();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setCurrentIndex((prev) => (prev - 1 + slideCount) % slideCount);
+        showControls();
+      }
+    };
+    
+    window.addEventListener('keydown', keyHandler);
+    return () => {
+      window.removeEventListener('keydown', keyHandler);
+    };
+  }, [slideCount]);
+
   useEffect(() => {
     return () => {
       clearTimeout(pressTimer.current);
       clearTimeout(visibilityTimer.current);
+      clearTimeout(mouseDownTimer.current);
+      clearTimeout(wheelTimeout.current);
     };
   }, []);
 
@@ -119,6 +191,10 @@ const useCarousel = (slideCount, onSlideClick, initialIndex = 0, onIndexChange) 
       onTouchStart: handleTouchStart,
       onTouchMove: handleTouchMove,
       onTouchEnd: handleTouchEnd,
+      onWheel: handleWheel,
+      onMouseDown: handleMouseDown,
+      onMouseUp: handleMouseUp,
+      onMouseLeave: handleMouseLeave,
     },
     nextSlide,
     prevSlide,
