@@ -1,4 +1,4 @@
-.learning-path-container {
+.reading-path-container {
   width: 100%;
   max-width: 450px;
   text-align: center;
@@ -8,14 +8,14 @@
   gap: 20px;
 }
 
-.learning-path-container h2 {
+.reading-path-container h2 {
   margin: 0;
   font-size: 2rem;
   font-weight: 900;
   color: #000000;
 }
 
-.learning-path-container p {
+.reading-path-container p {
     color: #555;
     line-height: 1.5;
 }
@@ -57,7 +57,7 @@
 
 
 @media (max-width: 600px) {
-  .learning-path-container h2 {
+  .reading-path-container h2 {
     font-size: 1.7rem;
   }
 }

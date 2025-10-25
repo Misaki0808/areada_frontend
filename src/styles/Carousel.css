@@ -12,6 +12,11 @@
   transition: transform 0.3s ease-in-out;
 }
 
+.carousel-track.zoomed .slide {
+  transform: scale(0.9);
+  opacity: 0.5;
+}
+
 .slide {
   flex: 0 0 100%;
   width: 100%;
@@ -21,6 +26,8 @@
   align-items: center;
   padding: 40px;
   box-sizing: border-box;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .slide-content {
@@ -37,6 +44,14 @@
 .slide-content p {
   font-size: 1.1rem;
   line-height: 1.6;
+}
+
+.slide-content .page-count {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 15px;
+  font-style: italic;
+  opacity: 0.8;
 }
 
 .carousel-control {
@@ -98,8 +113,16 @@
   right: 20px;
   background: transparent;
   border: none;
-  color: #333;
-  font-size: 2rem;
+  color: #5C4033; /* Koyu Kahverengi */
+  font-size: 2rem; /* Biraz daha belirgin olması için */
   cursor: pointer;
   z-index: 10;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  font-weight: bold;
 }

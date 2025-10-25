@@ -57,7 +57,7 @@ const PdfUploadForm = ({ onFileSelect, onUploadTrigger, showPrompt, fileName }) 
           <div className="textarea-container">
             <textarea
               className="expectation-input"
-              placeholder="What do you want to learn from this book?"
+              placeholder="What are your expectations from this book?"
               value={expectation}
               onChange={(e) => setExpectation(e.target.value)}
               onKeyDown={handleKeyDown}

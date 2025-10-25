@@ -1,25 +1,31 @@
 import { useState, useEffect, useRef } from 'react';
 
-const useCarousel = (slideCount) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+const useCarousel = (slideCount, onSlideClick, initialIndex = 0, onIndexChange) => {
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [isControlVisible, setIsControlVisible] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
   const isSwiping = useRef(false);
   const pressTimer = useRef(null);
   const visibilityTimer = useRef(null);
 
+  useEffect(() => {
+    if (onIndexChange) {
+      onIndexChange(currentIndex);
+    }
+  }, [currentIndex, onIndexChange]);
+
   const showControls = () => {
     clearTimeout(visibilityTimer.current);
     setIsControlVisible(true);
     visibilityTimer.current = setTimeout(() => {
       setIsControlVisible(false);
-    }, 5000); // 5 saniye görünür kalır
+    }, 5000);
   };
 
   const nextSlide = (fromButton = false) => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % slideCount);
-    // Sadece butondan geliyorsa süre sıfırlansın
     if (fromButton) {
       showControls();
     }
@@ -27,14 +33,24 @@ const useCarousel = (slideCount) => {
 
   const prevSlide = (fromButton = false) => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + slideCount) % slideCount);
-    // Sadece butondan geliyorsa süre sıfırlansın
     if (fromButton) {
       showControls();
     }
   };
 
+  const handleSlideClick = (index) => {
+    if (onSlideClick && !isSwiping.current) {
+      setIsZoomed(true);
+      setTimeout(() => {
+        onSlideClick(index);
+        // We might not want to reset zoom immediately, 
+        // depends on how the parent component handles the view change.
+        // setIsZoomed(false); 
+      }, 300); // Corresponds to CSS transition time
+    }
+  };
+
   const handleTouchStart = (e) => {
-    // Eğer butona basıldıysa swipe'ı devre dışı bırak
     if (e.target.closest('.carousel-control') || e.target.closest('.exit-button')) {
       return;
     }
@@ -43,10 +59,9 @@ const useCarousel = (slideCount) => {
     touchEndX.current = e.targetTouches[0].clientX;
     isSwiping.current = false;
     
-    // 1 saniye basılı tutarsa butonlar beliriyor
     pressTimer.current = setTimeout(() => {
       showControls();
-    }, 1000); // 1 saniye
+    }, 1000);
   };
 
   const handleTouchMove = (e) => {
@@ -55,19 +70,17 @@ const useCarousel = (slideCount) => {
     touchEndX.current = e.targetTouches[0].clientX;
     const diff = Math.abs(touchStartX.current - touchEndX.current);
     
-    // 10px'den fazla hareket varsa swipe olarak işaretle ve butonları gösterme
     if (diff > 10) {
       isSwiping.current = true;
-      clearTimeout(pressTimer.current); // Swipe başladıysa butonları gösterme
+      clearTimeout(pressTimer.current);
     }
   };
 
   const handleTouchEnd = () => {
-    clearTimeout(pressTimer.current); // Timer'ı iptal et
+    clearTimeout(pressTimer.current);
     
     const swipeDistance = touchStartX.current - touchEndX.current;
     
-    // Butonlar görünürken butona tıklanmışsa swipe yapma
     if (isControlVisible && !isSwiping.current) {
       touchStartX.current = 0;
       touchEndX.current = 0;
@@ -75,12 +88,9 @@ const useCarousel = (slideCount) => {
       return;
     }
     
-    // Swipe mesafesi yeterliyse slide değiştir (butonlar görünmez)
-    // Sola kaydırma (swipe left) = İleri git
     if (swipeDistance > 50) {
       nextSlide();
     } 
-    // Sağa kaydırma (swipe right) = Geri git
     else if (swipeDistance < -50) {
       prevSlide();
     }
@@ -107,6 +117,8 @@ const useCarousel = (slideCount) => {
     },
     nextSlide,
     prevSlide,
+    isZoomed,
+    handleSlideClick,
   };
 };
 

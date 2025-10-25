@@ -1,17 +1,17 @@
 import React from 'react';
-import '../styles/LearningPath.css';
+import '../styles/ReadingPath.css';
 
-const LearningPath = ({ fileName, onReset, onStart }) => {
+const ReadingPath = ({ fileName, onReset, onStart }) => {
   return (
-    <div className="learning-path-container">
-      <h2>Ready to Learn!</h2>
+    <div className="reading-path-container">
+      <h2>Ready to Read!</h2>
       <p>
         Your book <strong>{fileName}</strong>
         <br />
-        is structured according to your learning goals.
+        is structured according to your reading goals.
       </p>
       <button onClick={onStart} className="start-button">
-        Start Learning
+        Start Reading
       </button>
       <button onClick={onReset} className="reset-button">
         Upload New Book
@@ -20,4 +20,4 @@ const LearningPath = ({ fileName, onReset, onStart }) => {
   );
 };
 
-export default LearningPath;
+export default ReadingPath;
