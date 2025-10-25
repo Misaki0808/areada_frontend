@@ -4,6 +4,8 @@ import PdfUploadForm from './components/PdfUploadForm';
 import BookAnimation from './components/BookAnimation';
 import ReadingPath from './components/ReadingPath';
 import Carousel from './components/Carousel';
+import QuizModal from './components/QuizModal';
+import { getQuizForPage } from './data/quizData';
 
 const MOCK_BOOKS = [
   { id: 1, name: "Statistics_Probability.pdf", status: 'ready' },
@@ -29,6 +31,8 @@ function App() {
   const [currentView, setCurrentView] = useState({ type: 'upload' });
   const [pendingFile, setPendingFile] = useState(null);
   const [chapterIndex, setChapterIndex] = useState(0);
+  const [currentQuiz, setCurrentQuiz] = useState(null);
+  const [completedQuizzes, setCompletedQuizzes] = useState(new Set()); // Tamamlanan quiz'leri takip et
 
   const handleFileSelect = (file) => {
     setPendingFile(file);
@@ -91,6 +95,45 @@ function App() {
     });
   };
 
+  const handlePageChange = (newPageIndex) => {
+    // Check if there's a quiz that should be shown after this page
+    const quiz = getQuizForPage(currentView.chapterIndex, newPageIndex);
+    
+    // Quiz varsa VE daha önce tamamlanmamışsa göster
+    if (quiz && !completedQuizzes.has(quiz.id)) {
+      setCurrentQuiz(quiz);
+    }
+  };
+
+  const handleQuizCorrect = () => {
+    // Quiz doğru cevaplanınca, quiz'i tamamlandı olarak işaretle
+    if (currentQuiz) {
+      setCompletedQuizzes(prev => new Set([...prev, currentQuiz.id]));
+    }
+    // Quiz'i kapat
+    setCurrentQuiz(null);
+  };
+
+  const handleQuizWrong = (referencePageIndex) => {
+    // Quiz yanlış cevaplanınca, cevabın bulunduğu sayfaya yönlendir
+    setCurrentQuiz(null);
+    
+    // Carousel'ı o sayfaya yönlendir
+    if (currentView.type === 'pages') {
+      // View'ı güncelle ve yeni başlangıç sayfasını set et
+      setCurrentView({
+        ...currentView,
+        initialPageIndex: referencePageIndex,
+        // Key'i değiştirmek için timestamp ekle
+        timestamp: Date.now()
+      });
+    }
+  };
+
+  const handleCloseQuiz = () => {
+    setCurrentQuiz(null);
+  };
+
   const handleExitPages = () => {
     setCurrentView({ type: 'chapters', bookId: currentView.bookId });
   };
@@ -149,12 +192,23 @@ function App() {
 
     if (currentView.type === 'pages') {
         return (
-          <Carousel 
-            key={`pages-${currentView.chapterIndex}`}
-            slides={currentView.pages} 
-            onExit={handleExitPages} 
-            initialIndex={0} // Always start from the first page
-          />
+          <>
+            <Carousel 
+              key={`pages-${currentView.chapterIndex}-${currentView.timestamp || 'initial'}`}
+              slides={currentView.pages} 
+              onExit={handleExitPages} 
+              initialIndex={currentView.initialPageIndex || 0}
+              onIndexChange={handlePageChange}
+            />
+            {currentQuiz && (
+              <QuizModal
+                quiz={currentQuiz}
+                onCorrectAnswer={handleQuizCorrect}
+                onWrongAnswer={handleQuizWrong}
+                onClose={handleCloseQuiz}
+              />
+            )}
+          </>
         );
     }
   };

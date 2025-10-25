@@ -10,6 +10,11 @@ const useCarousel = (slideCount, onSlideClick, initialIndex = 0, onIndexChange) 
   const pressTimer = useRef(null);
   const visibilityTimer = useRef(null);
 
+  // Update currentIndex when initialIndex changes (e.g., when navigating from quiz)
+  useEffect(() => {
+    setCurrentIndex(initialIndex);
+  }, [initialIndex]);
+
   useEffect(() => {
     if (onIndexChange) {
       onIndexChange(currentIndex);
