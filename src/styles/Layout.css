@@ -1,0 +1,23 @@
+/* src/styles/Layout.css */
+.layout-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: #FDFBF5; /* Rengi burada da güncelliyoruz */  
+  overflow: hidden;
+}
+
+.content-area {
+  flex-grow: 1;
+  padding: 40px;
+  overflow-y: auto; /* Sadece bu alanda scroll olsun */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .content-area {
+    padding: 20px;
+  }
+}   

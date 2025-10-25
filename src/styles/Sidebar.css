@@ -1,0 +1,121 @@
+/* src/styles/Sidebar.css */
+
+/* --- ANA YAPI --- */
+.sidebar {
+  width: 280px;
+  background-color: #ffffff;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Top ve Bottom'u ayırır */
+  transition: width 0.3s ease-in-out;
+  flex-shrink: 0;
+  color: #333;
+}
+
+/* --- DARALTILMIŞ DURUM --- */
+.sidebar.collapsed {
+  width: 80px;
+}
+
+/* Metinleri gizlemek için genel kural */
+.sidebar.collapsed .button-text,
+.sidebar.collapsed .book-name {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* --- GENEL BUTON STİLİ --- */
+.sidebar-button {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* İkon ve metin arası boşluk */
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-align: left;
+  font-size: 1rem;
+  color: inherit;
+  transition: background-color 0.2s;
+}
+.sidebar-button:hover {
+  background-color: #f4f4f4;
+}
+.sidebar-button .button-text {
+  transition: opacity 0.2s ease-in-out;
+}
+.sidebar-button svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0; /* İkonlar küçülmesin */
+}
+
+
+/* --- ÜST BÖLÜM --- */
+.sidebar-top {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toggle-button {
+  justify-content: center; /* İkonu ortala */
+  width: auto;
+  align-self: flex-start; /* Sola yasla */
+}
+
+/* --- KİTAP LİSTESİ --- */
+.book-list {
+  margin-top: 20px;
+}
+.book-list ul { list-style: none; padding: 0; margin: 0; }
+.book-list li {
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s;
+  font-size: 0.95rem;
+}
+.book-list li:hover { background-color: #f4f4f4; }
+.book-list li.active {
+  background-color: #eef2ff;
+  color: #4f46e5;
+  font-weight: 600;
+}
+.book-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity 0.2s ease;
+}
+
+/* Durum ikonları */
+.status-ready { color: #28a745; font-weight: bold; }
+.status-spinner {
+  width: 16px; height: 16px;
+  border: 2px solid #ccc;
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* --- ALT BÖLÜM (AYARLAR) --- */
+.sidebar-bottom {
+  padding: 15px;
+}
+
+/* --- MOBİL UYUMLULUK --- */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+}
