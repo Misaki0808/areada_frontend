@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/LearningPath.css';
 
-const LearningPath = ({ fileName, onReset }) => {
+const LearningPath = ({ fileName, onReset, onStart }) => {
   return (
     <div className="learning-path-container">
       <h2>Ready to Learn!</h2>
@@ -10,7 +10,7 @@ const LearningPath = ({ fileName, onReset }) => {
         <br />
         is structured according to your learning goals.
       </p>
-      <button onClick={() => alert("The learning cycle will begin!")} className="start-button">
+      <button onClick={onStart} className="start-button">
         Start Learning
       </button>
       <button onClick={onReset} className="reset-button">
