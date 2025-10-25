@@ -1,26 +1,25 @@
-.learning-path-container { /* Adı değişti */
+.learning-path-container {
   width: 100%;
   max-width: 450px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px; /* Boşluk biraz arttı */
+  gap: 20px;
 }
 
-.learning-path-container h2 { /* Adı değişti */
+.learning-path-container h2 {
   margin: 0;
   font-size: 2rem;
   font-weight: 900;
   color: #000000;
 }
 
-.learning-path-container p { /* Adı değişti */
+.learning-path-container p {
     color: #555;
     line-height: 1.5;
 }
 
-/* YENİ: Ana "Başla" butonu */
 .start-button {
   background-color: #000000;
   color: #ffffff;
@@ -38,7 +37,6 @@
     opacity: 0.85;
 }
 
-/* GÜNCELLENDİ: "Yeni Yükle" butonu artık daha ikincil duruyor */
 .reset-button {
   background-color: transparent;
   color: #555;
@@ -59,7 +57,7 @@
 
 
 @media (max-width: 600px) {
-  .learning-path-container h2 { /* Adı değişti */
+  .learning-path-container h2 {
     font-size: 1.7rem;
   }
 }

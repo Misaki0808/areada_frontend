@@ -1,13 +1,4 @@
-/* src/PdfUploadForm.css */
-
 .upload-container {
-  /* KALDIRILDI: Bu özellikler kutu görünümü veriyordu */
-  /* background-color: #ffffff; */
-  /* padding: 40px; */
-  /* border-radius: 8px; */
-  /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); */
-
-  /* Kalanlar aynı */
   width: 100%;
   max-width: 450px;
   text-align: center;
@@ -30,12 +21,6 @@
   margin-bottom: 30px;
 }
 
-.upload-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
 .upload-label {
   display: block;
   padding: 20px;
@@ -52,16 +37,40 @@
   background-color: #f8f9ff;
 }
 
-.upload-form input[type="file"] {
+input[type="file"] {
   display: none;
 }
 
-/* === YENİ EKLENEN KISIM BURASI === */
+.prompt-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.prompt-form.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.file-name-display {
+    margin-bottom: 10px;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.textarea-container {
+    position: relative;
+}
+
 .expectation-input {
   background-color: #ffffff;
   border: 2px solid #e0e0e0;
   border-radius: 8px;
   padding: 15px;
+  padding-right: 50px;
   font-size: 1rem;
   font-family: inherit;
   width: 100%;
@@ -78,39 +87,34 @@
   outline: none;
   border-color: #667eea;
 }
-/* === YENİ KISIM BİTTİ === */
 
-
-.submit-button {
-  background-color: #000000;
-  color: #ffffff;
+.forward-button {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: transparent;
+  color: #999;
   border: none;
-  border-radius: 8px;
-  padding: 15px;
-  font-size: 1rem;
-  font-weight: bold;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 
-.submit-button:hover:not(:disabled) {
-  opacity: 0.85;
-  transform: translateY(-2px);
-}
-
-.submit-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
+.forward-button:hover {
+    color: #000;
 }
 
 @media (max-width: 600px) {
   .upload-header h2 {
-    /* Başlık mobilde biraz daha küçük olsun */
     font-size: 2rem;
   }
 
   .upload-header p {
-    /* Slogan da aynı şekilde */
     font-size: 0.8rem;
   }
 

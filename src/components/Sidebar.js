@@ -1,15 +1,12 @@
-// src/components/Sidebar.js
 import React from 'react';
 import '../styles/Sidebar.css';
 
-// Kitap durumu için kullanılan spinner/onay ikonu (Bu aynı kalıyor)
 const StatusIcon = ({ status }) => {
   if (status === 'processing') return <div className="status-spinner"></div>;
   if (status === 'ready') return <span className="status-ready">✓</span>;
   return null;
 };
 
-// Yeni ikonlar için SVG bileşenleri
 const HamburgerIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M3 12H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -34,15 +31,22 @@ const SettingsIcon = () => (
 
 
 const Sidebar = ({ books, onSelectBook, onAddNew, currentView, isOpen, toggle }) => {
+  const handleItemClick = (handler, ...args) => {
+    if (window.innerWidth <= 768) {
+      toggle();
+    }
+    handler(...args);
+  };
+
   return (
     <aside className={`sidebar ${isOpen ? 'open' : 'collapsed'}`}>
       <div className="sidebar-top">
         <button onClick={toggle} className="sidebar-button toggle-button">
           <HamburgerIcon />
         </button>
-        <button onClick={onAddNew} className="sidebar-button add-new-button">
+        <button onClick={() => handleItemClick(onAddNew)} className="sidebar-button add-new-button">
           <EditIcon />
-          <span className="button-text">Yeni Kitap Yükle</span>
+          <span className="button-text">Upload New Book</span>
         </button>
         <nav className="book-list">
           <ul>
@@ -50,7 +54,7 @@ const Sidebar = ({ books, onSelectBook, onAddNew, currentView, isOpen, toggle })
               <li
                 key={book.id}
                 className={currentView.type === 'book' && currentView.bookId === book.id ? 'active' : ''}
-                onClick={() => onSelectBook(book.id)}
+                onClick={() => handleItemClick(onSelectBook, book.id)}
               >
                 <span className="book-name">{book.name}</span>
                 <StatusIcon status={book.status} />
@@ -62,7 +66,7 @@ const Sidebar = ({ books, onSelectBook, onAddNew, currentView, isOpen, toggle })
       <div className="sidebar-bottom">
         <button className="sidebar-button settings-button">
           <SettingsIcon />
-          <span className="button-text">Ayarlar</span>
+          <span className="button-text">Settings</span>
         </button>
       </div>
     </aside>

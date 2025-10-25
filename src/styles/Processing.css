@@ -1,6 +1,4 @@
-/* src/Processing.css */
-
-.processing-container { /* Sadece bu kelime değişti */
+.processing-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,13 +6,12 @@
   gap: 20px;
 }
 
-.processing-container h2 { /* Sadece bu kelime değişti */
+.processing-container h2 {
   font-size: 1.5rem;
   font-weight: 600;
   color: #333;
 }
 
-/* YENİ EKLENEN KISIM */
 .processing-container p {
     color: #666;
     font-size: 1rem;
@@ -23,8 +20,8 @@
 .spinner {
   width: 50px;
   height: 50px;
-  border: 5px solid #f3f3f3; /* Light grey */
-  border-top: 5px solid #000000; /* Black */
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #000000;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }

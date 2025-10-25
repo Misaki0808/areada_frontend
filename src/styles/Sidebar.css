@@ -1,24 +1,19 @@
-/* src/styles/Sidebar.css */
-
-/* --- ANA YAPI --- */
 .sidebar {
   width: 280px;
   background-color: #ffffff;
   border-right: 1px solid #e0e0e0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Top ve Bottom'u ayırır */
+  justify-content: space-between;
   transition: width 0.3s ease-in-out;
   flex-shrink: 0;
   color: #333;
 }
 
-/* --- DARALTILMIŞ DURUM --- */
 .sidebar.collapsed {
   width: 80px;
 }
 
-/* Metinleri gizlemek için genel kural */
 .sidebar.collapsed .button-text,
 .sidebar.collapsed .book-name {
   opacity: 0;
@@ -27,11 +22,10 @@
   white-space: nowrap;
 }
 
-/* --- GENEL BUTON STİLİ --- */
 .sidebar-button {
   display: flex;
   align-items: center;
-  gap: 15px; /* İkon ve metin arası boşluk */
+  gap: 15px;
   background: none;
   border: none;
   cursor: pointer;
@@ -52,11 +46,9 @@
 .sidebar-button svg {
   width: 24px;
   height: 24px;
-  flex-shrink: 0; /* İkonlar küçülmesin */
+  flex-shrink: 0;
 }
 
-
-/* --- ÜST BÖLÜM --- */
 .sidebar-top {
   padding: 15px;
   display: flex;
@@ -65,12 +57,11 @@
 }
 
 .toggle-button {
-  justify-content: center; /* İkonu ortala */
+  justify-content: center;
   width: auto;
-  align-self: flex-start; /* Sola yasla */
+  align-self: flex-start;
 }
 
-/* --- KİTAP LİSTESİ --- */
 .book-list {
   margin-top: 20px;
 }
@@ -99,7 +90,6 @@
   transition: opacity 0.2s ease;
 }
 
-/* Durum ikonları */
 .status-ready { color: #28a745; font-weight: bold; }
 .status-spinner {
   width: 16px; height: 16px;
@@ -110,12 +100,36 @@
 }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
-/* --- ALT BÖLÜM (AYARLAR) --- */
 .sidebar-bottom {
   padding: 15px;
 }
 
-/* --- MOBİL UYUMLULUK --- */
 @media (max-width: 768px) {
-  .sidebar { display: none; }
+  .sidebar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar.collapsed {
+    width: 280px;
+  }
+
+  .sidebar.collapsed .button-text,
+  .sidebar.collapsed .book-name {
+    opacity: 1;
+    width: auto;
+  }
+
+  .sidebar .toggle-button {
+    display: none;
+  }
 }

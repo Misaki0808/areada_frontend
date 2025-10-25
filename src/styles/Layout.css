@@ -1,23 +1,39 @@
-/* src/styles/Layout.css */
 .layout-container {
   display: flex;
   width: 100vw;
   height: 100vh;
-  background-color: #FDFBF5; /* Rengi burada da güncelliyoruz */  
+  background-color: #FDFBF5;
   overflow: hidden;
 }
 
 .content-area {
   flex-grow: 1;
   padding: 40px;
-  overflow-y: auto; /* Sadece bu alanda scroll olsun */
+  overflow-y: auto;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.mobile-menu-button {
+  display: none;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1100;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
   .content-area {
     padding: 20px;
   }
-}   
+
+  .mobile-menu-button {
+    display: block;
+  }
+}

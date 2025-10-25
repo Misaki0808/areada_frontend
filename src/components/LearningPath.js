@@ -1,21 +1,20 @@
-// src/LearningPath.js
 import React from 'react';
-import '../styles/LearningPath.css'; // Stil dosyasının adını da değiştireceğiz
+import '../styles/LearningPath.css';
 
 const LearningPath = ({ fileName, onReset }) => {
   return (
     <div className="learning-path-container">
-      <h2>Öğrenime Hazır!</h2>
+      <h2>Ready to Learn!</h2>
       <p>
-        <strong>{fileName}</strong> adlı kitabınız
+        Your book <strong>{fileName}</strong>
         <br />
-        öğrenme hedeflerinize göre yapılandırıldı.
+        is structured according to your learning goals.
       </p>
-      <button onClick={() => alert("Öğrenme döngüsü başlayacak!")} className="start-button">
-        Öğrenmeye Başla
+      <button onClick={() => alert("The learning cycle will begin!")} className="start-button">
+        Start Learning
       </button>
       <button onClick={onReset} className="reset-button">
-        Yeni Kitap Yükle
+        Upload New Book
       </button>
     </div>
   );

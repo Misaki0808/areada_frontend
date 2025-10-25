@@ -1,34 +1,47 @@
-// src/App.js
 import React, { useState } from 'react';
 import Layout from './components/Layout';
 import PdfUploadForm from './components/PdfUploadForm';
-import Processing from './components/Processing';
+import BookAnimation from './components/BookAnimation';
 import LearningPath from './components/LearningPath';
 
 const MOCK_BOOKS = [
-  { id: 1, name: "İstatistik_Olasılık.pdf", status: 'ready' },
-  { id: 2, name: "Makine_Öğrenmesi_101.pdf", status: 'ready' },
+  { id: 1, name: "Statistics_Probability.pdf", status: 'ready' },
+  { id: 2, name: "Machine_Learning_101.pdf", status: 'ready' },
 ];
 
 function App() {
   const [books, setBooks] = useState(MOCK_BOOKS);
   const [currentView, setCurrentView] = useState({ type: 'upload' });
+  const [pendingFile, setPendingFile] = useState(null);
 
-  const handleIngestionStart = (file, userGoal) => {
+  const handleFileSelect = (file) => {
+    setPendingFile(file);
+    setCurrentView({ type: 'uploading' });
+
+    setTimeout(() => {
+      setCurrentView({ type: 'prompt' });
+    }, 2000);
+  };
+
+  const handleIngestionStart = (userGoal) => {
+    if (!pendingFile) return;
+
     const newBook = {
       id: Date.now(),
-      name: file.name,
+      name: pendingFile.name,
       status: 'processing',
     };
     setBooks(prevBooks => [newBook, ...prevBooks]);
     setCurrentView({ type: 'book', bookId: newBook.id });
+    setPendingFile(null);
+
     setTimeout(() => {
       setBooks(prevBooks =>
         prevBooks.map(book =>
           book.id === newBook.id ? { ...book, status: 'ready' } : book
         )
       );
-    }, 5000);
+    }, 10000);
   };
 
   const handleSelectBook = (bookId) => {
@@ -37,12 +50,33 @@ function App() {
 
   const handleAddNew = () => {
     setCurrentView({ type: 'upload' });
+    setPendingFile(null);
   };
 
   const renderContent = () => {
     if (currentView.type === 'upload') {
-      return <PdfUploadForm onUploadTrigger={handleIngestionStart} />;
+        return (
+            <PdfUploadForm
+            onFileSelect={handleFileSelect}
+            showPrompt={false}
+            />
+        );
     }
+    
+    if (currentView.type === 'uploading') {
+        return <BookAnimation title="Uploading your book..." subtitle={pendingFile?.name} />;
+    }
+
+    if (currentView.type === 'prompt') {
+      return (
+        <PdfUploadForm
+          onUploadTrigger={handleIngestionStart}
+          showPrompt={true}
+          fileName={pendingFile?.name}
+        />
+      );
+    }
+
     if (currentView.type === 'book') {
       const selectedBook = books.find(b => b.id === currentView.bookId);
       if (!selectedBook) {
@@ -51,11 +85,11 @@ function App() {
       }
       switch (selectedBook.status) {
         case 'processing':
-          return <Processing />;
+          return <BookAnimation type="pages" title="Processing your book..." subtitle={selectedBook.name} />;
         case 'ready':
           return <LearningPath fileName={selectedBook.name} onReset={handleAddNew} />;
         default:
-          return <div>Bilinmeyen kitap durumu</div>;
+          return <div>Unknown book status</div>;
       }
     }
   };
@@ -71,4 +105,5 @@ function App() {
     </Layout>
   );
 }
+
 export default App;
