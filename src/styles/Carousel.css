@@ -70,11 +70,11 @@
 }
 
 .carousel-control.prev {
-  left: 20px;
+  left: -10px; /* 20px'ten 10px'e düşürdüm */
 }
 
 .carousel-control.next {
-  right: 20px;
+  right: -10px; /* 20px'ten 10px'e düşürdüm */
 }
 
 .carousel-control.visible {

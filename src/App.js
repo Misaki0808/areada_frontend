@@ -11,11 +11,16 @@ const MOCK_BOOKS = [
 ];
 
 const MOCK_SLIDES = [
-    { title: 'Introduction to Areada', content: 'This is the first part of your learning path. Swipe to continue.' },
-    { title: 'Core Concepts', content: 'Here we dive into the main topics of the selected chapter.' },
-    { title: 'Practical Examples', content: 'Let\'s see how these concepts are applied in real-world scenarios.' },
-    { title: 'Quiz Time', content: 'Test your knowledge with a quick quiz.' },
-    { title: 'Summary', content: 'Here is a summary of what you have learned in this section.' },
+    { title: 'Chapter 1: Introduction to Statistics', content: 'Understanding the fundamental concepts of statistics and probability theory. Learn the basics of data analysis and statistical thinking.' },
+    { title: 'Chapter 2: Descriptive Statistics', content: 'Learn how to summarize and describe data using measures like mean, median, mode, variance, and standard deviation.' },
+    { title: 'Chapter 3: Probability Theory', content: 'Explore the mathematical framework for quantifying uncertainty and randomness in statistical analysis.' },
+    { title: 'Chapter 4: Random Variables', content: 'Understanding discrete and continuous random variables and their probability distributions.' },
+    { title: 'Chapter 5: Statistical Inference', content: 'Learn how to make predictions and draw conclusions from sample data using estimation techniques.' },
+    { title: 'Chapter 6: Hypothesis Testing', content: 'Master the process of testing claims about populations using sample statistics and p-values.' },
+    { title: 'Chapter 7: Confidence Intervals', content: 'Construct and interpret confidence intervals for population parameters with various confidence levels.' },
+    { title: 'Chapter 8: Regression Analysis', content: 'Explore relationships between variables using linear regression, correlation, and predictive modeling.' },
+    { title: 'Chapter 9: ANOVA and Chi-Square', content: 'Analyze variance between groups and test independence in categorical data using statistical tests.' },
+    { title: 'Chapter 10: Advanced Topics', content: 'Dive into Bayesian statistics, non-parametric methods, and modern machine learning applications.' },
 ];
 
 
