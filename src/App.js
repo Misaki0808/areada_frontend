@@ -32,6 +32,7 @@ function App() {
   const [chapterIndex, setChapterIndex] = useState(0);
   const [currentQuiz, setCurrentQuiz] = useState(null);
   const [completedQuizzes, setCompletedQuizzes] = useState(new Set()); // Tamamlanan quiz'leri takip et
+  const [previousPageIndex, setPreviousPageIndex] = useState(null); // Önceki sayfa index'ini takip et
 
   const handleFileSelect = (file) => {
     setPendingFile(file);
@@ -99,6 +100,7 @@ function App() {
     }
 
     setChapterIndex(selectedChapterIndex); // Remember where we left off
+    setPreviousPageIndex(null); // Yeni chapter'a geçerken sayfa index'ini sıfırla
 
     setCurrentView({
       type: 'pages',
@@ -109,13 +111,40 @@ function App() {
   };
 
   const handlePageChange = (newPageIndex) => {
-    // Check if there's a quiz that should be shown after this page
-    const quiz = getQuizForPage(currentView.chapterIndex, newPageIndex);
-    
-    // Quiz varsa VE daha önce tamamlanmamışsa göster
-    if (quiz && !completedQuizzes.has(quiz.id)) {
-      setCurrentQuiz(quiz);
+    // İlk yüklemede quiz gösterme (previousPageIndex null ise)
+    if (previousPageIndex === null) {
+      setPreviousPageIndex(newPageIndex);
+      return;
     }
+    
+    // Aynı sayfaya geçiş varsa ignore et
+    if (previousPageIndex === newPageIndex) {
+      return;
+    }
+    
+    // Döngüsel geçiş durumunu kontrol et (son sayfadan ilk sayfaya)
+    const totalPages = currentView.pages?.length || 0;
+    const isWrappingToStart = newPageIndex === 0 && previousPageIndex === totalPages - 1;
+    
+    if (isWrappingToStart) {
+      // Son sayfadan ilk sayfaya dönüyorsa, son sayfanın quiz'ini göster
+      const lastPageIndex = totalPages - 1;
+      const quiz = getQuizForPage(currentView.chapterIndex, lastPageIndex);
+      
+      if (quiz && !completedQuizzes.has(quiz.id)) {
+        setCurrentQuiz(quiz);
+      }
+    } else if (newPageIndex > previousPageIndex) {
+      // İleri gidiyoruz: Önceki sayfanın quiz'ini göster
+      const quiz = getQuizForPage(currentView.chapterIndex, previousPageIndex);
+      
+      if (quiz && !completedQuizzes.has(quiz.id)) {
+        setCurrentQuiz(quiz);
+      }
+    }
+    
+    // Yeni index'i kaydet
+    setPreviousPageIndex(newPageIndex);
   };
 
   const handleQuizCorrect = () => {
