@@ -90,12 +90,12 @@ const Carousel = ({ slides, onSlideClick, onExit, initialIndex, onIndexChange })
     setReportReady(false);
     setCheckpointSubmitted(true);
     
-    // 2 saniye sonra reset et
+    // 4 saniye sonra reset et (2 saniye daha uzun)
     setTimeout(() => {
       setCheckpointSubmitted(false);
       setCheckpointAnswer('');
       setCheckpointTag('');
-    }, 2000);
+    }, 4000);
   };
 
   return (
