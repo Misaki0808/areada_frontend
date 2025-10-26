@@ -13,16 +13,15 @@ const MOCK_BOOKS = [
 ];
 
 const MOCK_SLIDES = [
-    { title: 'Chapter 1: Introduction to Statistics', content: 'Understanding the fundamental concepts of statistics and probability theory. Read the basics of data analysis and statistical thinking.', pageCount: 25 },
-    { title: 'Chapter 2: Descriptive Statistics', content: 'Read how to summarize and describe data using measures like mean, median, mode, variance, and standard deviation.', pageCount: 32 },
-    { title: 'Chapter 3: Probability Theory', content: 'Explore the mathematical framework for quantifying uncertainty and randomness in statistical analysis.', pageCount: 28 },
-    { title: 'Chapter 4: Random Variables', content: 'Understanding discrete and continuous random variables and their probability distributions.', pageCount: 35 },
-    { title: 'Chapter 5: Statistical Inference', content: 'Read how to make predictions and draw conclusions from sample data using estimation techniques.', pageCount: 22 },
-    { title: 'Chapter 6: Hypothesis Testing', content: 'Master the process of testing claims about populations using sample statistics and p-values.', pageCount: 30 },
-    { title: 'Chapter 7: Confidence Intervals', content: 'Construct and interpret confidence intervals for population parameters with various confidence levels.', pageCount: 18 },
-    { title: 'Chapter 8: Regression Analysis', content: 'Explore relationships between variables using linear regression, correlation, and predictive modeling.', pageCount: 38 },
-    { title: 'Chapter 9: ANOVA and Chi-Square', content: 'Analyze variance between groups and test independence in categorical data using statistical tests.', pageCount: 27 },
-    { title: 'Chapter 10: Advanced Topics', content: 'Dive into Bayesian statistics, non-parametric methods, and modern machine reading applications.', pageCount: 40 },
+    { 
+        title: 'The Challenges of Customer Conversations', 
+    },
+    { 
+        title: 'Avoiding Bad Data in Customer Conversations', 
+    },
+    { 
+        title: 'Best Practices for Customer Conversations', 
+    },
 ];
 
 
@@ -78,12 +77,26 @@ function App() {
   };
 
   const handleChapterSelect = (selectedChapterIndex) => {
-    const selectedChapter = MOCK_SLIDES[selectedChapterIndex];
-    const pageCount = selectedChapter.pageCount || 20;
-    const pages = Array.from({ length: pageCount }, (_, i) => ({
-      title: `${selectedChapter.title} - Page ${i + 1}`,
-      content: `This is page ${i + 1} of ${selectedChapter.title.toLowerCase()}. Here you will find detailed information and reading materials specific to this chapter.`
-    }));
+    // Şimdilik sadece 2. chapter (index 1) için sayfalar var
+    let pages = [];
+    
+    if (selectedChapterIndex === 1) {
+      // "Avoiding Bad Data in Customer Conversations" chapter'ının sayfaları
+      pages = [
+        {
+          title: "The Difficulty of Effective Customer Conversations",
+          content: "Talking to customers is hard. We know we ought to talk to customers. Many of us even do talk to customers. But we still end up building stuff nobody buys. Isn't that exactly what talking to people is meant to prevent? It turns out almost all of us are doing it wrong. I've made these mistakes myself and seen them happen a hundred times over with other founders."
+        },
+        {
+          title: "The Consequences of Bad Customer Conversations",
+          content: "Bad customer conversations aren't just useless. Worse, they convince you that you're on the right path. They give you a false positive which causes you to over-invest your cash, your time, and your team. Even when you're not actively screwing something up, those pesky customers seem hellbent on lying to you."
+        },
+        {
+          title: "The Need for a Practical Approach",
+          content: "This book is a practical how-to. The approach and tools within are gathered from a wide range of communities including Customer Development, Design Thinking, Lean Startup, User Experience, traditional sales and more. It's based on working with a bunch of founders and from my experiences both failing and succeeding at customer learning, as well as from the support of innumerable peers and mentors."
+        }
+      ];
+    }
 
     setChapterIndex(selectedChapterIndex); // Remember where we left off
 
