@@ -95,6 +95,11 @@ function App() {
         {
           title: "The Need for a Practical Approach",
           content: "This book is a practical how-to. The approach and tools within are gathered from a wide range of communities including Customer Development, Design Thinking, Lean Startup, User Experience, traditional sales and more. It's based on working with a bunch of founders and from my experiences both failing and succeeding at customer learning, as well as from the support of innumerable peers and mentors."
+        },
+        {
+          title: "Chapter Checkpoint",
+          content: "What did you learn from this chapter?",
+          isCheckpoint: true // Bu sayfa bir checkpoint
         }
       ];
     }

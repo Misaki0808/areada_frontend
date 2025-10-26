@@ -62,6 +62,147 @@
   align-self: flex-start;
 }
 
+.bookmark-tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 0 8px 8px 0;
+  margin-left: -15px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.bookmark-tab:hover {
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateX(2px);
+}
+
+.bookmark-tab::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.bookmark-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.bookmark-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: opacity 0.2s ease;
+}
+
+.sidebar.collapsed .bookmark-text {
+  opacity: 0;
+  width: 0;
+}
+
+.sidebar.collapsed .bookmark-tab {
+  padding: 12px 10px;
+  justify-content: center;
+}
+
+.bookmark-pulse {
+  animation: bookmarkPulse 0.6s ease-out;
+}
+
+@keyframes bookmarkPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+  }
+}
+
+.tags-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tag-item {
+  background: #f0f0f0;
+  color: #667eea;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 2px solid #667eea;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: inline-block;
+  width: fit-content;
+}
+
+.tag-item:hover {
+  background: #667eea;
+  color: white;
+  transform: translateX(2px);
+}
+
+.tag-inputs-list {
+  margin-top: 8px;
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: slideDown 0.3s ease;
+}
+
+.tag-input-preview {
+  background: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border-left: 3px solid #667eea;
+  color: #333;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.tag-input-preview:hover {
+  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+  border-left-color: #764ba2;
+  transform: translateX(3px);
+  box-shadow: 0 2px 5px rgba(102, 126, 234, 0.2);
+}
+
+.sidebar.collapsed .tags-container {
+  display: none;
+}
+
 .book-list {
   margin-top: 20px;
 }

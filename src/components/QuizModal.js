@@ -123,8 +123,6 @@ const QuizModal = ({ quiz, onCorrectAnswer, onWrongAnswer, onClose }) => {
             </div>
           ) : showFeedback ? (
             <div className="quiz-result feedback" onClick={handleFeedbackClick} style={{ cursor: 'pointer' }}>
-              <div className="result-icon">📝</div>
-              <h3>Feedback</h3>
               <p className="feedback-text">{quiz.feedback}</p>
               <p className="click-hint">
                 {clickCount === 0 ? 'Click anywhere to continue (2 clicks needed)' : 'Click once more to continue'}

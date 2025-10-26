@@ -1,0 +1,129 @@
+.tag-detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.tag-detail-modal {
+  background: linear-gradient(135deg, #FDFBF5 0%, #FFF 100%);
+  border-radius: 20px;
+  width: 75%;
+  max-width: 1200px;
+  height: 75vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+  animation: slideUp 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.tag-detail-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 32px;
+  color: #667eea;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.tag-detail-close:hover {
+  background: #667eea;
+  color: white;
+  transform: rotate(90deg);
+}
+
+.tag-detail-content {
+  padding: 60px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.tag-detail-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 30px;
+  border-bottom: 2px solid #667eea;
+}
+
+.tag-detail-header h2 {
+  color: #333;
+  font-size: 32px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.tag-detail-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 16px 32px;
+  border-radius: 30px;
+  font-size: 24px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.tag-detail-body {
+  margin-top: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.tag-detail-body h3 {
+  color: #667eea;
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.tag-detail-input {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  border: 2px solid #667eea;
+  color: #333;
+  font-size: 18px;
+  line-height: 1.8;
+  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.1);
+  flex: 1;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

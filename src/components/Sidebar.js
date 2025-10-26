@@ -31,11 +31,69 @@ const SettingsIcon = () => (
 
 
 const Sidebar = ({ books, onSelectBook, onAddNew, currentView, isOpen, toggle }) => {
+  const [tagsOpen, setTagsOpen] = React.useState(false);
+  const [selectedTag, setSelectedTag] = React.useState(null);
+
   const handleItemClick = (handler, ...args) => {
     if (window.innerWidth <= 768) {
       toggle();
     }
     handler(...args);
+  };
+
+  const mockTags = [
+    'Avoiding_Bad_Data',
+    'Customer_Conversations',
+    'False_Positives',
+    'Data_Quality',
+    'Customer_Learning'
+  ];
+
+  // Her TAG için farklı inputlar (ilk 5 kelime preview)
+  const tagInputs = {
+    'Avoiding_Bad_Data': [
+      "I've learned that bad data comes...",
+      "Compliments and fluff are dangerous when...",
+      "The startup lost ten million because...",
+      "Always deflect compliments and anchor fluff...",
+      "False positives lead to catastrophic over-investment..."
+    ],
+    'Customer_Conversations': [
+      "Effective customer conversations require listening more...",
+      "Ask open-ended questions to uncover...",
+      "Never pitch during discovery conversations...",
+      "Customer interviews reveal hidden pain points...",
+      "The best insights come from silence..."
+    ],
+    'False_Positives': [
+      "False positives waste time and resources...",
+      "Mistaking interest for commitment is costly...",
+      "Validate assumptions before building anything new...",
+      "Real commitment requires skin in game...",
+      "Future promises are worthless without action..."
+    ],
+    'Data_Quality': [
+      "Quality data comes from specific past...",
+      "Vague answers indicate low confidence or...",
+      "Anchor every claim to concrete examples...",
+      "The rule of three helps verify...",
+      "Good data is specific measurable and..."
+    ],
+    'Customer_Learning': [
+      "Learning from customers means observing behaviors...",
+      "What they do matters more than...",
+      "Early adopters provide the most valuable...",
+      "Customer feedback loops accelerate product development...",
+      "Iteration based on real data wins..."
+    ]
+  };
+
+  const handleTagClick = (tag) => {
+    if (selectedTag === tag) {
+      setSelectedTag(null); // Toggle off
+    } else {
+      setSelectedTag(tag); // Toggle on
+    }
   };
 
   return (
@@ -48,20 +106,60 @@ const Sidebar = ({ books, onSelectBook, onAddNew, currentView, isOpen, toggle })
           <EditIcon />
           <span className="button-text">Upload New Book</span>
         </button>
-        <nav className="book-list">
-          <ul>
-            {books.map((book) => (
-              <li
-                key={book.id}
-                className={currentView.type === 'book' && currentView.bookId === book.id ? 'active' : ''}
-                onClick={() => handleItemClick(onSelectBook, book.id)}
-              >
-                <span className="book-name">{book.name}</span>
-                <StatusIcon status={book.status} />
-              </li>
+        
+        {/* Kitap Ayracı */}
+        <div 
+          className="bookmark-tab" 
+          id="bookmark-tab"
+          onClick={() => setTagsOpen(!tagsOpen)}
+        >
+          <div className="bookmark-icon">🔖</div>
+          <span className="bookmark-text">Tags</span>
+        </div>
+        
+        {/* Tags List */}
+        {tagsOpen && (
+          <div className="tags-container">
+            {mockTags.map((tag, index) => (
+              <div key={index}>
+                <span 
+                  className="tag-item"
+                  onClick={() => handleTagClick(tag)}
+                >
+                  #{tag}
+                </span>
+                
+                {/* TAG açıldığında input preview'ları göster */}
+                {selectedTag === tag && (
+                  <div className="tag-inputs-list">
+                    {tagInputs[tag].map((input, idx) => (
+                      <div key={idx} className="tag-input-preview">
+                        {input}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
-          </ul>
-        </nav>
+          </div>
+        )}
+        
+        {!tagsOpen && (
+          <nav className="book-list">
+            <ul>
+              {books.map((book) => (
+                <li
+                  key={book.id}
+                  className={currentView.type === 'book' && currentView.bookId === book.id ? 'active' : ''}
+                  onClick={() => handleItemClick(onSelectBook, book.id)}
+                >
+                  <span className="book-name">{book.name}</span>
+                  <StatusIcon status={book.status} />
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
       </div>
       <div className="sidebar-bottom">
         <button className="sidebar-button settings-button">
